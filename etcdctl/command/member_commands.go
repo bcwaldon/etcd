@@ -41,13 +41,13 @@ func mustNewMembersAPI(c *cli.Context) client.MembersAPI {
 		}
 	}
 
-	mAPI, err := client.NewMembersAPI(&http.Transport{}, peers, client.DefaultRequestTimeout)
+	hc, err := client.NewHTTPClient(&http.Transport{}, peers)
 	if err != nil {
 		fmt.Fprintln(os.Stderr, err.Error())
 		os.Exit(1)
 	}
 
-	return mAPI
+	return client.NewMembersAPI(hc, client.DefaultRequestTimeout)
 }
 
 func actionMemberList(c *cli.Context) {
